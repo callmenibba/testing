@@ -6,7 +6,7 @@ from config import BOT_USERNAME
 from pyrogram.errors import UserAlreadyParticipant
 from helpers.decorators import errors, authorized_users_only
 
-@Client.on_message(filters.group & filters.command(["userbotjoin"]))
+@Client.on_message(filters.group & filters.command(["userbotjoin", f"userbotjoin{BOT_USERNAME}"]))
 @authorized_users_only
 @errors
 async def addchannel(client, message):
@@ -15,7 +15,7 @@ async def addchannel(client, message):
         invitelink = await client.export_chat_invite_link(chid)
     except:
         await message.reply_text(
-            "<b>Add me as admin of yor group first</b>",
+            "Add me as admin of yor group first.",
         )
         return
 
@@ -35,21 +35,18 @@ async def addchannel(client, message):
     except Exception as e:
         print(e)
         await message.reply_text(
-            f"<b>🛑 Flood Wait Error 🛑 \n User {user.first_name} couldn't join your group due to heavy join requests for userbot! Make sure user is not banned in group."
-            f"\n\nOr manually add @{BOT_USERNAME} to your Group and try again</b>",
+            f"Flood Wait Error\nUser {user.first_name} couldn't join your group due to heavy join requests for userbot! Make sure user is not banned in group."
+            f"\n\nOr manually add @{BOT_USERNAME} to your Group and try again.",
         )
         return
-    await message.reply_text(
-            "<b>helper userbot joined your chat</b>",
-        )
     
-@USER.on_message(filters.group & filters.command(["userbotleave"]))
+@USER.on_message(filters.group & filters.command(["userbotleave", f"userbotleave{BOT_USERNAME}"]))
 async def rem(USER, message):
     try:
         await USER.leave_chat(message.chat.id)
     except:  
         await message.reply_text(
-            f"<b>User couldn't leave your group! May be floodwaits."
-            "\n\nOr manually kick me from to your Group</b>",
+            f"User couldn't leave your group! May be floodwaits."
+            "\n\nOr manually kick me from to your Group.",
         )
         return
