@@ -40,7 +40,7 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 from config import que
-#from Python_ARQ import ARQ
+from Python_ARQ import ARQ
 from pyrogram.errors import UserNotParticipant
 from handlers.song import arq
 import json
