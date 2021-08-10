@@ -14,8 +14,8 @@ from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
 from config import que, admins as a
 
-@Client.on_message(filters.command('reload'))
-async def update_admin(client, message):
+@Client.on_message(filters.command("reload"))
+async def admincache(client, message):
     global a
     admins = await client.get_chat_members(message.chat.id, filter="administrators")
     new_ads = []
@@ -27,7 +27,7 @@ async def update_admin(client, message):
 
 
 
-@Client.on_message(command("pause") & other_filters)
+@Client.on_message(filters.command(["pause", f"pause{BN}"]) & other_filters)
 @errors
 @authorized_users_only
 async def pause(_, message: Message):
@@ -42,7 +42,7 @@ async def pause(_, message: Message):
         await message.reply_text("▶️ Paused!")
 
 
-@Client.on_message(command("resume") & other_filters)
+@Client.on_message(filters.command(["resume", f"resume{BN}"]) & other_filters)
 @errors
 @authorized_users_only
 async def resume(_, message: Message):
@@ -57,7 +57,7 @@ async def resume(_, message: Message):
         await message.reply_text("⏸ Resumed!")
 
 
-@Client.on_message(command("end") & other_filters)
+@Client.on_message(filters.command(["end", f"end{BN}"]) & other_filters)
 @errors
 @authorized_users_only
 async def stop(_, message: Message):
@@ -73,7 +73,7 @@ async def stop(_, message: Message):
         await message.reply_text("❌ Stopped streaming!")
 
 
-@Client.on_message(command("skip") & other_filters)
+@Client.on_message(filters.command(["skip", f"skip{BN}"]) & other_filters)
 @errors
 @authorized_users_only
 async def skip(_, message: Message):
@@ -98,12 +98,3 @@ async def skip(_, message: Message):
     if not qeue:
         return
     await message.reply_text(f'- Skipped **{skip[0]}**\n- Now Playing **{qeue[0][0]}**')
-
-
-@Client.on_message(
-    filters.command("reload")
-)
-@errors
-async def admincache(client, message: Message):
-    set(message.chat.id, [member.user for member in await message.chat.get_members(filter="administrators")])
-     #await message.reply_text("✯𝗩𝗖𝗣𝗹𝗮𝘆𝗕𝗼𝘁✯=❇️ Admin cache refreshed!")
