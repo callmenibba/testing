@@ -1,4 +1,5 @@
 FROM debian:latest
+FROM python:3.9.6-buster
 
 RUN apt update && apt upgrade -y
 RUN apt install git curl python3-pip ffmpeg -y
@@ -11,3 +12,4 @@ WORKDIR /app/
 COPY . /app/
 RUN pip3 install -U -r requirements.txt
 CMD python3 main.py
+© 2021 GitHub, Inc.
