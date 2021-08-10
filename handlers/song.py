@@ -20,8 +20,12 @@ from typing import Callable, Coroutine, Dict, List, Tuple, Union
 import sys
 import time
 from helpers.errors import DurationLimitError
+from config import BOT_USERNAME, ARQ_API_KEY
 
-@Client.on_message(filters.command('song') & ~filters.channel)
+aiohttpsession = aiohttp.ClientSession()
+arq = ARQ("https://thearq.tech", ARQ_API_KEY, aiohttpsession)
+
+@Client.on_message(filters.command(["song", f"song{BOT_USERNAME}"]) & ~filters.channel)
 def song(client, message):
 
     user_id = message.from_user.id 
@@ -61,7 +65,7 @@ def song(client, message):
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = '**🎵 Uploaded by @GroupMusicPlayBot **'
+        rep = '**Uploaded by @AnteikuMuiscBot **'
         secmul, dur, dur_arr = 1, 0, duration.split(':')
         for i in range(len(dur_arr)-1, -1, -1):
             dur += (int(dur_arr[i]) * secmul)
@@ -240,7 +244,7 @@ def time_to_seconds(time):
     return sum(int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(':'))))
 
 
-@Client.on_message(filters.command("saavn") & ~filters.edited)
+@Client.on_message(filters.command(["saavn", f"saavn{BOT_USERNAME}"]) & ~filters.edited)
 async def jssong(_, message):
     global is_downloading
     if len(message.command) < 2:
@@ -275,7 +279,7 @@ async def jssong(_, message):
 
 # Deezer Music
 
-@Client.on_message(filters.command("deezer") & ~filters.edited)
+@Client.on_message(filters.command(["deezer", f"deezer{BOT_USERNAME}"]) & ~filters.edited)
 async def deezsong(_, message):
     global is_downloading
     if len(message.command) < 2:
@@ -307,7 +311,7 @@ async def deezsong(_, message):
     is_downloading = False
 
 
-@Client.on_message(filters.command(["vsong", "vid"]))
+@Client.on_message(filters.command(["vsong", "vid", f"vsong{BOT_USERNAME}", f"vid{BOT_USERNAME}"]))
 async def ytmusic(client,message: Message):
     global is_downloading
     if is_downloading:
@@ -371,7 +375,7 @@ async def ytmusic(client,message: Message):
     c_time = time.time()
     file_stark = f"{ytdl_data['id']}.mp4"
     capy = f"**Video Name ➠** `{thum}` \n**Requested For :** `{urlissed}` \n**Channel :** `{thums}` \n**Link :** `{mo}`"
-    await client.send_video(message.chat.id, video = open(file_stark, "rb"), duration = int(ytdl_data["duration"]), file_name = str(ytdl_data["title"]), thumb = sedlyf, caption = capy, supports_streaming = True , progress=progress, progress_args=(pablo, c_time, f'`Uploading {urlissed} Song From YouTube Music!`', file_stark))
+    await client.send_video(message.chat.id, video = open(file_stark, "rb"), duration = int(ytdl_data["duration"]), file_name = str(ytdl_data["title"]), thumb = sedlyf, caption = capy, supports_streaming = True , progress=progress, progress_args=(pablo, c_time, f'`Uploading {urlissed} Song From YouTube!`', file_stark))
     await pablo.delete()
     is_downloading = False
     for files in (sedlyf, file_stark):
