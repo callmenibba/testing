@@ -18,4 +18,4 @@ DURATION_LIMIT = int(getenv("DURATION_LIMIT", "10"))
 COMMAND_PREFIXES = list(getenv("COMMAND_PREFIXES", "/ !").split())
 
 SUDO_USERS = list(map(int, getenv("SUDO_USERS", "").split()))
-ARQ_API_KEY = getenv("ARQ_API_KEY", "TGHAWG-DVYNKW-VKOEBY-QJIWOC-ARQ")
+ARQ_API_KEY = getenv("ARQ_API_KEY", "HJFMVB-YJQZOJ-RSLPVN-ZGTVUF-ARQ")
