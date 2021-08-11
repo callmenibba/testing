@@ -39,7 +39,7 @@ def get_readable_time(seconds: int) -> str:
 
 @Client.on_message(filters.command("ping") & filters.user(SUDO_USERS))
 async def ping(c: Client, m: Message):
-gg = await c.send_message("Ping")
+    await c.send_message("Ping")
     end_time = time.time()
     telegram_ping = str(round((end_time - start_time) * 1000, 3)) + " ms"
     uptime = get_readable_time((time.time() - StartTime))
